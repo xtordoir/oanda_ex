@@ -1,6 +1,18 @@
 defmodule Oanda.Mixfile do
   use Mix.Project
 
+  # Utility function to configure which sink to use
+  #def sink() do StdoutSink  end
+  def sink() do Koanda end
+
+
+  def sinkApp() do
+    case sink() do
+      StdoutSink -> []
+      Koanda     -> [:kafka_ex]
+    end
+  end
+
   def project do
     [
       app: :oanda,
@@ -14,7 +26,9 @@ defmodule Oanda.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      applications: [:httpotion, :httpoison, :kafka_ex],
+#      applications: [:httpotion, :httpoison, :kafka_ex],
+      applications: [:httpotion, :httpoison] ++ sinkApp(),
+      env: [sink: sink()],
       extra_applications: [:logger]#,
       #mod: {App, []}
     ]

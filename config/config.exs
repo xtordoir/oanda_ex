@@ -28,7 +28,8 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
-config :oanda, 
+
+config :oanda,
     api_key: System.get_env("OANDA_API_KEY"),
     account: System.get_env("OANDA_ACCOUNT"),
     instrument: "EUR_USD"
@@ -40,5 +41,3 @@ config :kafka_ex,
   consumer_group: :no_consumer_group,
   disable_default_worker: false,
   kafka_version: "0.11.1"
-
-

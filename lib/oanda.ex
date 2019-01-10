@@ -17,8 +17,10 @@ defmodule Oanda do
 end
 def config do
     {Application.get_env(:oanda, :api_key), 
-     Application.get_env(:oanda, :account), 
-     Application.get_env(:oanda, :instrument)}
+     Application.get_env(:oanda, :account),
+     Application.get_env(:oanda, :instrument),
+     Application.get_env(:oanda, :sink)
+   }
 end
 
 def auth do
@@ -40,6 +42,10 @@ end
 
   def pricing(account, instrument) do
     Poison.decode!( get("accounts/" <> account <> "/pricing?instruments=" <> instrument).body )
+  end
+
+  def candles(instrument, count, granularity) do
+    Poison.decode!(get("instruments/" <> instrument <> "/candles?" <> "count=" <> count <> "&price=M" <> "&granularity=" <> granularity).body)
   end
 
 end
